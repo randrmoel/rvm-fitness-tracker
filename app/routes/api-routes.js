@@ -34,7 +34,12 @@ module.exports = function(app){
     app.put("/api/workouts/:id", ({body, params}, res) =>{
         db.Workout.findByIdAndUpdate(
             params.id,
-            {$push: {exercise:body}}
+            {$push: {exercise:body}},
+            {
+                new:true,
+                runValidators:true
+            }
+
         )
         .then(data => res.json(data))
         .catch(err =>{
@@ -44,7 +49,6 @@ module.exports = function(app){
     });
 
     // get workouts in range
-
     app.get("/api/workouts/range", (req, res) => {
         db.Workout.find({}).limit(7)
           .then(dbWO => {
@@ -55,5 +59,4 @@ module.exports = function(app){
             res.json(err);
           });
       });
-
 } // end of module exports

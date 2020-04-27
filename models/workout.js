@@ -1,8 +1,8 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-`        type: "resistance",
-name: "Bicep Curl",
+` type: "resistance",
+  name: "Bicep Curl",
 duration: 20,
 weight: 100,
 reps: 10,
@@ -29,8 +29,21 @@ const WorkoutSchema = new Schema({
     },
     weight: Number,
     reps: Number,
-    sets: Number
+    sets: Number,
+    distance: Number
   }]
+},
+{
+  toJSON:{
+    virtual: true
+  }
+});
+
+WorkoutSchema.virtual("totalDuration").get(function() {
+  // "reduce" array of exercises down to just the sum of their durations
+  return this.exercises.reduce((total, exercise) => {
+    return total + exercise.duration;
+  }, 0);
 });
 
 const Workout = mongoose.model("Workout", WorkoutSchema);
