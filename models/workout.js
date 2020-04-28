@@ -1,6 +1,10 @@
+// Get mongoose and create schema
+
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
+// Example of document from workout
+// as an exemplar
 ` type: "resistance",
   name: "Bicep Curl",
 duration: 20,
@@ -33,12 +37,15 @@ const WorkoutSchema = new Schema({
     distance: Number
   }]
 },
+// additional data based on sum of exercises
 {
   toJSON:{
     virtuals: true
   }
 });
 
+// Function to get durations and display on home page
+// and stats
 WorkoutSchema.virtual("totalDuration").get(function() {
   // "reduce" array of exercises down to just the sum of their durations
   return this.exercises.reduce((total, exercise) => {
@@ -46,6 +53,8 @@ WorkoutSchema.virtual("totalDuration").get(function() {
   }, 0);
 });
 
+// create database called Workout from WorkoutSchema
 const Workout = mongoose.model("Workout", WorkoutSchema);
 
+//make Workout available to other modules
 module.exports = Workout;

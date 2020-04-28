@@ -5,9 +5,9 @@ const db = require("../../models");
 "/api/workouts/" + id -- POST, addExcercise
 "/api/workouts" -- POST, createWorkout
 "/api/workouts/range"  -- GET/FETCH, getWorkoutsInRange
-
-
 `
+
+// Route definitions
 module.exports = function(app){
     //last workout
     app.get("/api/workouts", (req, res)=>{
